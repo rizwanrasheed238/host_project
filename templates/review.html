@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello</title>
+{% include 'alerts.html' %}
+</head>
+<body>
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+
+    <script>
+      setTimeout(function(){
+        if ($('#msg').length > 0){
+          $('#msg').remove();
+          }
+        },4000)
+</script>
+<h5><B>Rate Product</B></h5>
+<!-- Login Form -->
+
+  <p>Product Name: {{ productname }}</p>
+  <form method="POST">
+    {% csrf_token %}
+
+       <label for="review"></label>
+          <textarea name="review" placeholder="Share your review" required></textarea>
+       <br>
+
+          <button type="submit">Submit</button>
+  </form>
+
+</div>
+</body>
+</html>
