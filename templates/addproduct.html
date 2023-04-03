@@ -183,9 +183,9 @@
                       <div class="form-group">
                         <label for="exampleSelectGender">Category</label>
                         <select class="form-control" name="cate" id="exampleSelectGender">
-                              {% for c in category %}
+                              {% for c in categories %}
 <!--                          <option>Cat1</option>-->
-                              <option value="{{c.category}}">{{c.name}}</option>
+                              <option value="{{c.categories}}">{{c.name}}</option>
                               {% endfor %}
                         </select>
                       </div>
