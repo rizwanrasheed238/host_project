@@ -6,7 +6,7 @@ from django.contrib import messages, auth
 from seller.models import seller_product
 from antiqueapp.models import Category,product
 from django.urls import reverse
-
+from django.utils.text import slugify
 
 # Create your views here.
 
@@ -20,7 +20,7 @@ def addproduct(request):
     categories = Category.objects.all()
     if request.method == "POST":
         category_id = request.POST.get('cate')
-        category = Category.objects.get(name=category_id)
+        category = Category.objects.get(id=category_id)
         print(category,"***********************************************")
         pname = request.POST.get('pname')
         pdesc = request.POST.get('pdesc')
@@ -30,6 +30,8 @@ def addproduct(request):
         new_product =product(
             name=pname,
             descripton=pdesc,
+            slug=slugify(pname),
+            availabe=True,
             image=pimg,
             price=price,
             category=category,
@@ -41,7 +43,7 @@ def addproduct(request):
     return render(request, "addproduct.html", {'categories': categories})
 
 def viewproduct(request):
-    products = seller_product.objects.filter(user_id=request.user)
+    products = product.objects.filter(user_id=request.user)
 
     return render(request, "seller.html", {'products': products})
 
