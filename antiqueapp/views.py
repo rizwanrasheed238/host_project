@@ -36,7 +36,7 @@ from django.core.mail import send_mail
 from django.http import JsonResponse
 from textblob import TextBlob
 
-from django.db.models import Avg
+from django.db.models import Avg,Sum
 from antiqueapp.models import product, Rating
 from surprise import SVD
 from surprise import Dataset
@@ -384,8 +384,6 @@ def editprofile(request):
 def address(request):
     user = request.user.id
     adrs = Address.objects.filter(user_id=user)
-
-
     print(adrs)
     if request.method == "POST":
         fname = request.POST.get('fname')
@@ -407,6 +405,22 @@ def address(request):
         return redirect('address')
 
     return render(request, "dashboard.html",{'adrs':adrs})
+
+
+from .forms import AddressForm
+
+def add_address(request):
+    if request.method == 'POST':
+        form = AddressForm(request.POST)
+        if form.is_valid():
+            address = form.save(commit=False) # create a new address object but don't save it yet
+            address.user = request.user # set the user of the address to the current user
+            address.save() # save the address object
+            return redirect('address_list') # redirect to a success page or to the list of addresses
+    else:
+        form = AddressForm()
+
+    return render(request, 'dashboard.html', {'form': form})
 
 
 #for data visualisatiom im admin panel
@@ -453,7 +467,33 @@ def view(request):
     return render(request, 'admin/products_sold_by_month.html', context)
 
 
+# @csrf_exempt
+# def viewview(request):
+#     from io import BytesIO
+#     import base64
+#     import numpy as np
+#     top_products = product.objects.annotate(total_sales=Sum('orderplaced__quantity')).order_by('-total_sales')[:10]
 
+#     labels = [product.name for product in products if not np.isnan(product.total_sales)]
+#     sales = [value for value in sales if not np.isnan(value)]
+
+
+#     plt.pie(sales, labels=labels, autopct='%1.1f%%')
+#     plt.title('Top 10 Products by Sales')
+
+#     buffer = BytesIO()
+#     plt.savefig(buffer, format='png')
+#     buffer.seek(0)
+#     image_png = buffer.getvalue()
+#     buffer.close()
+#     graphic = base64.b64encode(image_png)
+#     graphic = graphic.decode('utf-8')
+
+#     # Render the template with the plot and URLs
+#     context = {
+#         'graphic': graphic,
+#     }
+#     return render(request, 'admin/top_products.html', context)    
 
 
 def rateproduct(request,id):
@@ -469,6 +509,7 @@ def rateproduct(request,id):
         return redirect(reverse_lazy('home'))
     else:
         context = {'order': order, 'product': product, 'productname': product.name}
+        messages.success("Thank you for your feedback")
         return render(request, 'review.html', context)
 
 from twilio.rest import Client 

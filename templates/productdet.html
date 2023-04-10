@@ -232,12 +232,12 @@
                                         <h5>Out of Stock</h5>
                                         {% else %}
                                           <a href="{% url 'addcart' i.id %}" class="btn-product btn-cart" type="submit"><span>Add to cart</span></a>
+                                          {% endif %}
 
                                         <div class="details-action-wrapper">
                                             <a href="{% url 'add_wishlist' i.id %}" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
 
                                         </div><!-- End .details-action-wrapper -->
-                                         {% endif %}
                                     </div><!-- End .product-details-action -->
 
 

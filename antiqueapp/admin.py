@@ -2,11 +2,12 @@ import base64
 from io import BytesIO
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from django.db.models import Avg
+from django.db.models import Avg,Sum
 from django.http import HttpResponse
 from django.urls import path
 from matplotlib import pyplot as plt
 from matplotlib.patches import Patch
+# from antiqueapp.views import products
 
 from cart.models import Payment, OrderPlaced
 # Register your models here.
@@ -20,6 +21,7 @@ admin.site.register(Category,CategoryAdmin)
 
 
 import matplotlib.pyplot as plt
+import numpy as np
 import base64
 from io import BytesIO
 
@@ -71,6 +73,32 @@ class productAdmin(admin.ModelAdmin):
     prepopulated_fields ={'slug':('name',)}
     list_per_page = 20
 
+
+
+    def top_products(self,request):
+        products = product.objects.annotate(total_sales=Sum('orderplaced__quantity')).order_by('-total_sales')[:10]
+
+        sales = [product.total_sales for product in products if isinstance(product.total_sales, (int, float))]
+        labels = [product.name for product in products if isinstance(product.total_sales, (int, float))]
+
+        plt.pie(sales, labels=labels, autopct='%1.1f%%')
+        plt.title('Top 10 Products by Sales')
+
+        buffer = BytesIO()
+        plt.savefig(buffer, format='png')
+        buffer.seek(0)
+        image_png = buffer.getvalue()
+        buffer.close()
+        graphic = base64.b64encode(image_png)
+        graphic = graphic.decode('utf-8')
+
+        context = {
+            'graphic': graphic,
+        }
+        response = HttpResponse(content_type='image/png')
+        response.write(base64.b64decode(graphic))
+        return response
+
     def sentiment_graph(self, request):
         products = product.objects.all()
         data = {}
@@ -111,6 +139,7 @@ class productAdmin(admin.ModelAdmin):
         urls = super().get_urls()
         custom_urls = [
             path('sentiment-graph/', self.admin_site.admin_view(self.sentiment_graph), name='sentiment-graph'),
+            path('top-products/', self.admin_site.admin_view(self.top_products), name='top-products'),
 
         ]
         return custom_urls + urls

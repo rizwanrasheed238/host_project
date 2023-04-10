@@ -171,6 +171,7 @@ JAZZMIN_SETTINGS = {
         {"name": "View Website", "url": "http://127.0.0.1:8000/", "new_window": True},
         {"name": "Sales Chart", "url": "http://127.0.0.1:8000/view/", "new_window": True},
         {"name":"Sentiment Graph", "url":"http://127.0.0.1:8000/admin/antiqueapp/product/sentiment-graph/","new_window":True},
+        {"name":"Product Sales", "url":"http://127.0.0.1:8000/admin/antiqueapp/product/top-products/","new_window":True},
 
 
     ],

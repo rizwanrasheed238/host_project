@@ -236,17 +236,24 @@
 			                						<input type="text" class="form-control" required name="lname">
 			                					</div><!-- End .col-sm-6 -->
 			                				</div><!-- End .row -->
+
+											<form method="POST">
+												{% csrf_token %}
                                             <div class="row">
 			                					<div class="col-sm-6">
 			                						<label>Street Address</label>
-			                						<input type="text" class="form-control" required name="street" placeholder="House number and Street name" required>
-			                					</div><!-- End .col-sm-6 -->
+													
+												</div><!-- End .col-sm-6 -->
 
 			                					<div class="col-sm-6">
 			                						<label>City</label>
 			                						<input type="text" class="form-control" required name="city">
 			                					</div><!-- End .col-sm-6 -->
 			                				</div><!-- End .row -->
+
+
+										
+
 
 		                					<label>State</label>
 		        							<input type="text" class="form-control" required name="state">

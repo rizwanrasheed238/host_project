@@ -12,6 +12,9 @@ from django.views.generic import View
 from .utils import render_to_pdf
 from antiqueapp.views import sendsms
 
+import json
+from decimal import Decimal
+
 
 @login_required(login_url='login')
 def cart(request):
@@ -100,7 +103,8 @@ def add_wishlist(request,id):
     else:
         new_wishlist=Wishlist(user_id=user.id,product_id=item.id)
         new_wishlist.save()
-        return redirect('view_wishlist')
+        messages.success("item added to wishlist")
+        return redirect('home')
     messages.success(request, 'Sign in..!!')
     return redirect(login)
 
@@ -114,74 +118,58 @@ def de_wishlist(request,id):
 def checkout(request):
     user = request.user
     cart = Cart.objects.filter(user_id=user)
-    orders =OrderPlaced.objects.filter(user_id=user)
-    total = 0
+    orders = OrderPlaced.objects.filter(user_id=user)
+    total = Decimal('0')
+    category = Category.objects.all()
+
     for i in cart:
         total += i.product.price * i.product_qty
-        # total += i.product.price * i.product_qty
-    category = Category.objects.all()
-    # addresses = address.objects.get(user=request.user)
 
-    razoramount = total*100
+    razoramount = float(total) * 100
 
-    print(razoramount)
-
-
-    print(total)
-    # subcategory = Subcategory.objects.all()
     client = razorpay.Client(auth=(settings.RAZORPAY_API_KEY, settings.RAZORPAY_API_SECRET_KEY))
 
     data = {
-        "amount": total,
-
+        "amount": float(total),
         "currency": "INR",
         "receipt": "order_rcptid_11"
-
     }
     payment_response = client.order.create(data=data)
-    print(payment_response)
-    # {'id': 'order_KiA20AN3oqWYPk', 'entity': 'order', 'amount': 100, 'amount_paid': 0, 'amount_due': 100,
-    #  'currency': 'INR', 'receipt': 'order_rcptid_11', 'offer_id': None, 'status': 'created', 'attempts': 0, 'notes': [],
-    #  'created_at': 1668918425}
+
     order_id = payment_response['id']
     request.session['order_id'] = order_id
     order_status = payment_response['status']
-    add=Address.objects.filter(user_id= request.user)
-    print(add,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+    add = Address.objects.filter(user_id=request.user)
+
     if order_status == 'created':
         payment = Payment(user=request.user,
                           amount=total,
                           razorpay_order_id=order_id,
                           razorpay_payment_status=order_status)
         payment.save()
-       
 
-    return render(request, 'checkout.html', {'orders':orders,'check': cart, 'total': total, 'category': category,'razoramount':razoramount,'address':add})
+    return render(request, 'checkout.html', {'orders': orders, 'check': cart, 'total': total, 'category': category, 'razoramount': razoramount, 'address': add})
 
 def payment_done(request):
-    order_id=request.session['order_id']
+    order_id = request.session['order_id']
     payment_id = request.GET.get('payment_id')
-    print(payment_id)
 
-    payment=Payment.objects.get(razorpay_order_id = order_id)
-
+    payment = Payment.objects.get(razorpay_order_id=order_id)
     payment.paid = True
     payment.razorpay_payment_id = payment_id
     payment.save()
-    sendsms()
-    # get(request, id)
+
+    # sendsms()
     messages.success(request, 'Thank You for ordering')
 
-
-    cart=Cart.objects.filter(user=request.user)
-    # item = Product.objects.get(product=product, id=item_id)
-    
+    cart = Cart.objects.filter(user=request.user)
     for c in cart:
-        OrderPlaced(user=request.user,product=c.product,quantity=c.product_qty,payment=payment,is_ordered=True).save()
+        c.product.stock -= c.product_qty
+        c.product.save()
+        OrderPlaced(user=request.user, product=c.product, quantity=c.product_qty, payment=payment, is_ordered=True).save()
         c.delete()
 
     return redirect('home.html')
-
 
 
 #pdf generate

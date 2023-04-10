@@ -13,7 +13,7 @@ from django.utils.text import slugify
 
 
 def seller(request):
-    products = seller_product.objects.filter(user_id=request.user)
+    products = product.objects.all()
     return render(request, "seller.html", {'products': products})
 
 def addproduct(request):
@@ -43,7 +43,7 @@ def addproduct(request):
     return render(request, "addproduct.html", {'categories': categories})
 
 def viewproduct(request):
-    products = product.objects.filter(user_id=request.user)
+    products = product.objects.filter()
 
     return render(request, "seller.html", {'products': products})
 

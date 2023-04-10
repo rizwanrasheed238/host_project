@@ -96,17 +96,17 @@ class Category(models.Model):
         return reverse('antiqueapp:products_by_category', args=self.slug)
 
     def __str__(self):
-        return '{}'.format(self.name)
+        return self.name
 
 
 class product(models.Model):
     name = models.CharField(max_length=250, unique=True)
     slug = models.SlugField(max_length=250, unique=True)
     descripton = models.TextField(blank=True)
-    price = models.FloatField(default=0)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    stock = models.IntegerField(default=1)
-    image = models.ImageField()
+    image = models.ImageField(upload_to='products', blank=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    stock = models.IntegerField()
     availabe = models.BooleanField(default=True)
     createf = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -116,9 +116,34 @@ class product(models.Model):
         verbose_name = 'product'
         verbose_name_plural = 'products'
 
-    def __str__(self):
-        return '{}'.format(self.name)
+    def get_url(self):
+        return reverse('antiqueapp:product_detail', args=[self.category.slug, self.slug])
 
+    def __str__(self):
+        return self.slug
+
+
+
+
+# class product(models.Model):
+#     name = models.CharField(max_length=250, unique=True)
+#     slug = models.SlugField(max_length=250, unique=True)
+#     descripton = models.TextField(blank=True)
+#     price = models.FloatField(default=0)
+#     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+#     stock = models.IntegerField(default=1)
+#     image = models.ImageField()
+#     availabe = models.BooleanField(default=True)
+#     createf = models.DateTimeField(auto_now_add=True)
+#     updated = models.DateTimeField(auto_now=True)
+
+#     class Meta:
+#         ordering = ('name',)
+#         verbose_name = 'product'
+#         verbose_name_plural = 'products'
+
+#     def __str__(self):
+#         return self.name
 
 
     def averageReview(self):
