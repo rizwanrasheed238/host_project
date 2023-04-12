@@ -183,6 +183,7 @@
 
             <div class="page-content">
                 <div class="container">
+                    {% include 'alerts.html' %}
                     <div class="product-details-top">
                         <div class="row">
                              {% for i in datas %}
@@ -228,11 +229,11 @@
 
 
                                     <div class="product-details-action">
-                                        {% if product.stock == 0 %}
+                                        {% if product %}
                                         <h5>Out of Stock</h5>
                                         {% else %}
                                           <a href="{% url 'addcart' i.id %}" class="btn-product btn-cart" type="submit"><span>Add to cart</span></a>
-                                          {% endif %}
+                                        {% endif %}
 
                                         <div class="details-action-wrapper">
                                             <a href="{% url 'add_wishlist' i.id %}" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>

@@ -40,8 +40,7 @@ def addcart(request, id):
             new_cart = Cart(user_id=user.id, product_id=item.id, product_qty=product_qty, price=price)
             new_cart.save()
             return redirect(cart)
-    return HttpResponse("Error: Item out of stock.")
-
+    return HttpResponse("invalid stock")
 #Cart Quentity Plus Settings
 def plusqty(request, id):
     cart = Cart.objects.filter(id=id)
@@ -103,8 +102,7 @@ def add_wishlist(request,id):
     else:
         new_wishlist=Wishlist(user_id=user.id,product_id=item.id)
         new_wishlist.save()
-        messages.success("item added to wishlist")
-        return redirect('home')
+        
     messages.success(request, 'Sign in..!!')
     return redirect(login)
 
@@ -169,8 +167,7 @@ def payment_done(request):
         OrderPlaced(user=request.user, product=c.product, quantity=c.product_qty, payment=payment, is_ordered=True).save()
         c.delete()
 
-    return redirect('home.html')
-
+    return redirect('home')
 
 #pdf generate
 def get(request, id, *args, **kwargs, ):

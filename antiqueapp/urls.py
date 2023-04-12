@@ -31,7 +31,7 @@ urlpatterns = [
     path('recommendations/', views.recommend_products, name='recommendations'),
     path('review/<int:id>/', views.rateproduct, name='review'),
     path('admin/antiqueapp/product/sentiment-graph/', admin.site.admin_view(productAdmin.sentiment_graph), name='sentiment-graph'),
-    path('admin/antiqueapp/product/top-products/', admin.site.admin_view(productAdmin.top_products), name='sentiment-graph'),
+    path('admin/antiqueapp/product/top-products/', admin.site.admin_view(productAdmin.top_products), name='top-products'),
 
     path('search/',views.search_products, name='search_products'),
 
