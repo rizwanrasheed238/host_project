@@ -107,29 +107,25 @@ class productAdmin(admin.ModelAdmin):
             if reviews.exists():
                 sentiment_avg = reviews.aggregate(Avg('sentiment_polarity'))['sentiment_polarity__avg']
                 data[i.name] = sentiment_avg or 0
-
         # generate graph using matplotlib
         fig, ax = plt.subplots()
         fig.set_size_inches(20, 15)
-
-        colors = ['blue' if v > 0 else 'blue' if v < 0 else 'red' for v in data.values()]
+        colors = ['blue' if v > 0 else 'red' if v < 0 else 'green' for v in data.values()]
         ax.bar(data.keys(), data.values(), color=colors)
         ax.set_xlabel('Products')
         ax.set_ylabel('Average Sentiment Polarity')
-        ax.set_title('Best Product based on Sentiment Analysis')
+        ax.set_title('Sentiment Analysis of Products')
         plt.xticks(rotation=45)
         handles = [Patch(facecolor='blue', label='Positive'),
                    Patch(facecolor='red', label='Negative'),
-                   Patch(facecolor='green', label='Neutral')]
+                   ]
         # plt.legend(handles=handles)
         plt.legend(handles=handles, fontsize=20)
-
         # save graph as image and encode as base64
         buffer = BytesIO()
         plt.savefig(buffer, format='png')
         buffer.seek(0)
         image = base64.b64encode(buffer.getvalue()).decode('utf-8')
-
         # return HTTP response with graph as image
         response = HttpResponse(content_type='image/png')
         response.write(base64.b64decode(image))

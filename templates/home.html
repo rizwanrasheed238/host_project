@@ -405,6 +405,29 @@
             <!-- End .header-bottom -->
         </header><!-- End .header -->
 
+<style>
+    #slideshow {
+        position: relative;
+        width: 100%;
+        height: 400px; /* adjust as needed */
+        overflow: hidden;
+      }
+      #slideshow img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+      }
+      #slideshow img.active {
+        opacity: 1;
+      } 
+</style>
+    
+
+
         <main class="main">
 
 
@@ -412,10 +435,9 @@
                 <div id="banner-image-div" style="z-index:1000">
 
                 <img src="{% static 'assets/images/banner-1.jpg' %}" id="banner-image">
-<!--                    <div class="banner-content banner-content-middle">-->
-<!--                                     <h3 class="banner-title"><mark>how</mark></h3>&lt;!&ndash; End .banner-title &ndash;&gt;&ndash;&gt;-->
-<!--                                        <div class="banner-text">am</div>&lt;!&ndash; End .banner-text &ndash;&gt;-->
-<!--                                    </div>-->
+                <img src="{% static 'assets/images/banner-2.jpg' %}" id="banner-image">
+                
+
                 </div>
             <div class="brands-border owl-carousel owl-simple" data-toggle="owl"
                 data-owl-options='{
@@ -850,7 +872,25 @@
                                         <span class="old-price">Was $240.00</span>
                                     </div><!-- End .product-price -->
 
-                                    <div class="deal-countdown" data-until="+10h"></div><!-- End .deal-countdown -->
+                                    <div class="deal-countdown" data-until="+10h">
+                                        <div class="deal-countdown is-countdown" data-until="+10h">
+                                            <span class="countdown-row countdown-show3">
+                                                <span class="countdown-section">
+                                                    <span class="countdown-amount">09</span>
+                                                    <span class="countdown-period">hrs</span>
+                                                </span>
+                                                <span class="countdown-section">
+                                                    <span class="countdown-amount">58</span>
+                                                    <span class="countdown-period">mins</span>
+                                                </span>
+                                                <span class="countdown-section">
+                                                    <span class="countdown-amount">33</span>
+                                                    <span class="countdown-period">secs</span>
+                                                </span>
+                                            </span></div>
+
+
+                                    </div><!-- End .deal-countdown -->
 
                                     <a href="product.html" class="btn btn-primary">
                                         <span>Shop Now</span><i class="icon-long-arrow-right"></i>
@@ -1363,86 +1403,6 @@
         </main><!-- End .main -->
 
         <footer class="footer footer-2">
-            <div class="icon-boxes-container">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="icon-box icon-box-side">
-                                <span class="icon-box-icon text-dark">
-                                    <i class="icon-rocket"></i>
-                                </span>
-                                <div class="icon-box-content">
-                                    <h3 class="icon-box-title">Free Shipping</h3><!-- End .icon-box-title -->
-                                    <p>orders $50 or more</p>
-                                </div><!-- End .icon-box-content -->
-                            </div><!-- End .icon-box -->
-                        </div><!-- End .col-sm-6 col-lg-3 -->
-
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="icon-box icon-box-side">
-                                <span class="icon-box-icon text-dark">
-                                    <i class="icon-rotate-left"></i>
-                                </span>
-
-                                <div class="icon-box-content">
-                                    <h3 class="icon-box-title">Free Returns</h3><!-- End .icon-box-title -->
-                                    <p>within 30 days</p>
-                                </div><!-- End .icon-box-content -->
-                            </div><!-- End .icon-box -->
-                        </div><!-- End .col-sm-6 col-lg-3 -->
-
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="icon-box icon-box-side">
-                                <span class="icon-box-icon text-dark">
-                                    <i class="icon-info-circle"></i>
-                                </span>
-
-                                <div class="icon-box-content">
-                                    <h3 class="icon-box-title">Get 20% Off 1 Item</h3><!-- End .icon-box-title -->
-                                    <p>When you sign up</p>
-                                </div><!-- End .icon-box-content -->
-                            </div><!-- End .icon-box -->
-                        </div><!-- End .col-sm-6 col-lg-3 -->
-
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="icon-box icon-box-side">
-                                <span class="icon-box-icon text-dark">
-                                    <i class="icon-life-ring"></i>
-                                </span>
-
-                                <div class="icon-box-content">
-                                    <h3 class="icon-box-title">We Support</h3><!-- End .icon-box-title -->
-                                    <p>24/7 amazing services</p>
-                                </div><!-- End .icon-box-content -->
-                            </div><!-- End .icon-box -->
-                        </div><!-- End .col-sm-6 col-lg-3 -->
-                    </div><!-- End .row -->
-                </div><!-- End .container -->
-            </div><!-- End .icon-boxes-container -->
-<!--                    <div style="z-index:2000">-->
-<!--                        <iframe width="350" height="430" allow="microphone;" src="https://console.dialogflow.com/api-client/demo/embedded/5d8b040e-4651-42b2-b8eb-5be34ebc4e26"></iframe>-->
-<!--                    </div>-->
-        	<div class="footer-newsletter bg-image" style="background-image: url(assets/images/backgrounds/bg-2.jpg)">
-        		<div class="container">
-        			<div class="heading text-center">
-                        <h3 class="title">Get The Latest Deals</h3><!-- End .title -->
-                        <p class="title-desc">and receive <span>$20 coupon</span> for first shopping</p><!-- End .title-desc -->
-                    </div><!-- End .heading -->
-
-                    <div class="row">
-                    	<div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-                            <form action="#">
-    							<div class="input-group">
-    								<input type="email" class="form-control" placeholder="Enter your Email Address" aria-label="Email Adress" aria-describedby="newsletter-btn" required>
-    								<div class="input-group-append">
-    									<button class="btn btn-primary" type="submit" id="newsletter-btn"><span>Subscribe</span><i class="icon-long-arrow-right"></i></button>
-    								</div><!-- .End .input-group-append -->
-    							</div><!-- .End .input-group -->
-                            </form>
-                    	</div><!-- End .col-sm-10 offset-sm-1 col-lg-6 offset-lg-3 -->
-                    </div><!-- End .row -->
-        		</div><!-- End .container -->
-        	</div><!-- End .footer-newsletter bg-image -->
 
         	<div class="footer-middle">
 	            <div class="container">
@@ -1858,7 +1818,7 @@
                 <div class="row no-gutters bg-white newsletter-popup-content">
                     <div class="col-xl-3-5col col-lg-7 banner-content-wrap">
                         <div class="banner-content text-center">
-                            <img src="assets/images/popup/newsletter/logo.png" class="logo" alt="logo" width="60" height="15">
+                            <img src="{% static 'assets/images/popup/newsletter/logo.png' %}" class="logo" alt="logo" width="60" height="15">
                             <h2 class="banner-title">get <span>25<light>%</light></span> off</h2>
                             <form action="#">
                                 <div class="input-group input-group-round">
@@ -1875,7 +1835,7 @@
                         </div>
                     </div>
                     <div class="col-xl-2-5col col-lg-5 ">
-                        <img src="assets/images/popup/newsletter/img-1.jpg" class="newsletter-img" alt="newsletter">
+                        <img src="{% static 'assets/images/popup/newsletter/img-1.jpg' %}" class="newsletter-img" alt="newsletter">
                     </div>
                 </div>
             </div>
@@ -1883,19 +1843,37 @@
     </div>
 
     <!-- Plugins JS File -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/jquery.hoverIntent.min.js"></script>
-    <script src="assets/js/jquery.waypoints.min.js"></script>
-    <script src="assets/js/superfish.min.js"></script>
-    <script src="assets/js/owl.carousel.min.js"></script>
-    <script src="assets/js/jquery.plugin.min.js"></script>
-    <script src="assets/js/jquery.magnific-popup.min.js"></script>
-    <script src="assets/js/jquery.countdown.min.js"></script>
+    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.hoverIntent.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'assets/js/superfish.min.js' %}"></script>
+    <script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.plugin.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.countdown.min.js' %}"></script>
     <!-- Main JS File -->
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/demos/demo-2.js"></script>
+    <script src="{% static 'assets/js/main.js"></script>
+    <script src="{% static 'assets/js/demos/demo-2.js"></script>
 
+    <script>
+        var slideIndex = 0;
+var slides = document.getElementById("slideshow").getElementsByTagName("img");
+
+function showSlides() {
+  for (var i = 0; i < slides.length; i++) {
+    slides[i].classList.remove("active");
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) {
+    slideIndex = 1;
+  }
+  slides[slideIndex-1].classList.add("active");
+  setTimeout(showSlides, 5000); // Change image every 5 seconds
+}
+
+showSlides();
+    </script>
 
 </body>
 

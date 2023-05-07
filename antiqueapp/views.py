@@ -42,6 +42,9 @@ from surprise import SVD
 from surprise import Dataset
 from surprise import Reader
 
+from datetime import timedelta
+from django.utils import timezone
+# from celery.task import periodic_task
 
 
 
@@ -69,12 +72,28 @@ def products(request,id):
 
 def productdet(request,id):
     user=request.user
+    # review=Review.objects.filter(product_id=id,user_id=user)
     products = product.objects.filter(id=id)
+    rreview=Review.objects.filter(product_id=id)
     cart = Cart.objects.filter(user_id=user.id)
+    # print(review,"#####################################################")
     # category = Category.objects.all()
-    return render(request, 'productdet.html', {'datas': products,'cart':cart})
+    return render(request, 'productdet.html', {'datas': products,"rev":rreview,'cart':cart})
 
+def deal_of_day(request):
+    products = product.objects.filter(is_deal_of_day=True).first()
+    return render(request, 'home.html', {'product': products})
 
+# @periodic_task(run_every=timedelta(days=1))
+# def update_deal_of_day():
+#     # Reset previous deal of the day
+#     product.objects.filter(is_deal_of_day=True).update(is_deal_of_day=False)
+#     # Select a random product to be the new deal of the day
+#     products_count = product.objects.count()
+#     random_index = randint(0, products_count - 1)
+#     random_product = product.objects.all()[random_index]
+#     random_product.is_deal_of_day = True
+#     random_product.save()
 
 
 
@@ -136,6 +155,9 @@ def login(request):
             elif user.approved_staff:
                 return redirect('seller')
 
+            elif user.is_staff:
+                return redirect('seller')
+
             else:
                 # messages.success(request, 'invalid email')
                 # return redirect('register')
@@ -166,7 +188,6 @@ def register(request):
         else:
             is_staff = True
 
-        print(email,password,fname,lname,phone_number)
         if Account.objects.filter(email=email).exists():
             messages.error(request, 'email already exists')
             return redirect('login')
@@ -497,8 +518,12 @@ def view(request):
 
 
 def rateproduct(request,id):
+    user=request.user
     order = get_object_or_404(OrderPlaced,id=id)
-    product = order.product
+    pproduct = order.product
+    rreview=Review.objects.filter(product_id=id)
+    item = OrderPlaced.objects.filter(id=id)
+    print(item,'33333333333333333333333333333333')
     if request.method == 'POST':
         review = request.POST['review']
         review_data = Review.objects.create(
@@ -508,9 +533,8 @@ def rateproduct(request,id):
         )
         return redirect(reverse_lazy('home'))
     else:
-        context = {'order': order, 'product': product, 'productname': product.name}
-        messages.success("Thank you for your feedback")
-        return render(request, 'review.html', context)
+        context = {'order': order, 'product': pproduct,'rev':rreview,'datas':item, 'productname': product.name}
+        return render(request, 'productdet.html', context)
 
 from twilio.rest import Client 
  

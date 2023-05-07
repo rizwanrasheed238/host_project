@@ -17,6 +17,7 @@ def seller(request):
     return render(request, "seller.html", {'products': products})
 
 def addproduct(request):
+    user=request.user
     categories = Category.objects.all()
     if request.method == "POST":
         category_id = request.POST.get('cate')
@@ -28,6 +29,7 @@ def addproduct(request):
         price = request.POST.get('price')
         stock = request.POST.get('stock')
         new_product =product(
+            user=user,
             name=pname,
             descripton=pdesc,
             slug=slugify(pname),
@@ -43,7 +45,8 @@ def addproduct(request):
     return render(request, "addproduct.html", {'categories': categories})
 
 def viewproduct(request):
-    products = product.objects.filter()
+    user=request.user
+    products = product.objects.filter(user_id=user.id)
 
     return render(request, "seller.html", {'products': products})
 

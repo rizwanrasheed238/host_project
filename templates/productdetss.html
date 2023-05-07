@@ -270,14 +270,27 @@
 
                     <div class="product-details-tab">
                         <ul class="nav nav-pills justify-content-center" role="tablist">
-                          
                             <li class="nav-item">
-                                <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews </a>
+                                <a class="nav-link active" id="product-desc-link" data-toggle="tab" href="#product-desc-tab" role="tab" aria-controls="product-desc-tab" aria-selected="true">Description</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="product-info-link" data-toggle="tab" href="#product-info-tab" role="tab" aria-controls="product-info-tab" aria-selected="false">Additional information</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="product-shipping-link" data-toggle="tab" href="#product-shipping-tab" role="tab" aria-controls="product-shipping-tab" aria-selected="false">Shipping & Returns</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews (2)</a>
                             </li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel" aria-labelledby="product-desc-link">
-                                
+                                <div class="product-desc-content">
+                                    <h3>Product Information</h3>
+                                    <p></p>
+
+
+                                </div><!-- End .product-desc-content -->
                             </div><!-- .End .tab-pane -->
                             <div class="tab-pane fade" id="product-info-tab" role="tabpanel" aria-labelledby="product-info-link">
                                 <div class="product-desc-content">
@@ -307,7 +320,7 @@
                             </div><!-- .End .tab-pane -->
                             <div class="tab-pane fade" id="product-review-tab" role="tabpanel" aria-labelledby="product-review-link">
 
-                                <div class="wrapper fadeInDown">
+                               <div class="wrapper fadeInDown">
   
                                     <div id="formContent"   >
                                   
@@ -318,25 +331,30 @@
                                             }
                                           },4000)
                                   </script>
-                                  <h5><B><span style="color: #B57D50">Rate Product</span></B></h5>
 
 
 
 
                                   <!-- Login Form -->
                                   
-                                    <p>Product Name: {{ productname }}</p>
-                                    <form method="POST">
-                                      {% csrf_token %}
+                                  <div class="wrapper fadeInDown">
+                                    <div id="formContent">
+                                      <h5><b><span style="color: #B57D50">Rate Product</span></b></h5>
                                   
-                                         <label for="review"></label>
-                                            <textarea name="review" placeholder="Share your review" required></textarea>
-                                         <br>
+                                      <p>Product Name: {{ productname }}</p>
+                                      <form method="POST" onsubmit="return handleSubmit(event)">
+                                        {% csrf_token %}
+                                        <label for="review"></label>
+                                        <textarea name="review" placeholder="Share your review" required></textarea>
+                                        <br>
+                                        <button type="submit">Submit</button>
+                                      </form>
                                   
-                                            <button type="submit">Submit</button>
-                                    </form>
-                                </div>
-                            </div> 
+                                      <p>Your review: {{ review }}</span></p>
+                                    </div>
+                                  </div>
+
+                                  
 
 
 
@@ -400,6 +418,7 @@
                         </div><!-- End .tab-content -->
                     </div><!-- End .product-details-tab -->
 
+                    <h2 class="title text-center mb-4">You May Also Like</h2><!-- End .title text-center -->
 
                     <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl" 
                         data-owl-options='{
@@ -427,14 +446,14 @@
                                 }
                             }
                         }'>
-                        {% comment %} <div class="product product-7 text-center">
+                        <div class="product product-7 text-center">
                                 <h1>Recommended Products</h1>
                                 <ul>
                                 {% for product in products %}
                                     <li>{{ product.name }} - ${{ product.price }}</li>
                                 {% endfor %}
                                 </ul>
-                        </div><!-- End .product --> {% endcomment %}
+                        </div><!-- End .product -->
 
                         <div class="product product-7 text-center">
                             <figure class="product-media">
@@ -452,13 +471,127 @@
                                 </div><!-- End .product-action -->
                             </figure><!-- End .product-media -->
 
+                            <div class="product-body">
+
+                                <div class="ratings-container">
+                                    <div class="ratings">
+                                        <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
+                                    </div><!-- End .ratings -->
+                                    <span class="ratings-text">( 6 Reviews )</span>
+                                </div><!-- End .rating-container -->
+                            </div><!-- End .product-body -->
                         </div><!-- End .product -->
 
-                        
+                        <div class="product product-7 text-center">
+                            <figure class="product-media">
+                                <span class="product-label label-top">Top</span>
+                                <a href="product.html">
+                                    <img src="assets/images/products/product-11.jpg" alt="Product image" class="product-image">
+                                </a>
 
-                       
+                                <div class="product-action-vertical">
+                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
+                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
+                                </div><!-- End .product-action-vertical -->
 
-                       
+                                <div class="product-action">
+                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                </div><!-- End .product-action -->
+                            </figure><!-- End .product-media -->
+
+                            <div class="product-body">
+                                <div class="product-cat">
+                                    <a href="#">Shoes</a>
+                                </div><!-- End .product-cat -->
+                                <h3 class="product-title"><a href="product.html">Light brown studded Wide fit wedges</a></h3><!-- End .product-title -->
+                                <div class="product-price">
+                                    $110.00
+                                </div><!-- End .product-price -->
+                                <div class="ratings-container">
+                                    <div class="ratings">
+                                        <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
+                                    </div><!-- End .ratings -->
+                                    <span class="ratings-text">( 1 Reviews )</span>
+                                </div><!-- End .rating-container -->
+
+                                <div class="product-nav product-nav-thumbs">
+                                    <a href="#" class="active">
+                                        <img src="assets/images/products/product-11-thumb.jpg" alt="product desc">
+                                    </a>
+                                    <a href="#">
+                                        <img src="assets/images/products/product-11-2-thumb.jpg" alt="product desc">
+                                    </a>
+
+                                    <a href="#">
+                                        <img src="assets/images/products/product-11-3-thumb.jpg" alt="product desc">
+                                    </a>
+                                </div><!-- End .product-nav -->
+                            </div><!-- End .product-body -->
+                        </div><!-- End .product -->
+
+                        <div class="product product-7 text-center">
+                            <figure class="product-media">
+                                <a href="product.html">
+                                    <img src="assets/images/products/product-10.jpg" alt="Product image" class="product-image">
+                                </a>
+
+                                <div class="product-action-vertical">
+                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
+                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
+                                </div><!-- End .product-action-vertical -->
+
+                                <div class="product-action">
+                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                </div><!-- End .product-action -->
+                            </figure><!-- End .product-media -->
+
+                            <div class="product-body">
+                                <div class="product-cat">
+                                    <a href="#">Jumpers</a>
+                                </div><!-- End .product-cat -->
+                                <h3 class="product-title"><a href="product.html">Yellow button front tea top</a></h3><!-- End .product-title -->
+                                <div class="product-price">
+                                    $56.00
+                                </div><!-- End .product-price -->
+                                <div class="ratings-container">
+                                    <!-- End .rating-container -->
+                            </div><!-- End .product-body -->
+                        </div><!-- End .product -->
+
+                        <div class="product product-7 text-center">
+                            <figure class="product-media">
+                                <a href="product.html">
+                                    <img src="{% static 'assets/images/products/product-7.jpg' %}" alt="Product image" class="product-image">
+                                </a>
+
+                                <div class="product-action-vertical">
+                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
+                                </div><!-- End .product-action-vertical -->
+
+                                <div class="product-action">
+                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                </div><!-- End .product-action -->
+                            </figure><!-- End .product-media -->
+
+                            <div class="product-body">
+                                <div class="product-cat">
+                                    <a href="#">Jeans</a>
+                                </div><!-- End .product-cat -->
+                                <h3 class="product-title"><a href="product.html">Blue utility pinafore denim dress</a></h3><!-- End .product-title -->
+                                <div class="product-price">
+                                    $76.00
+                                </div><!-- End .product-price -->
+                                <div class="ratings-container">
+                                    <div class="ratings">
+                                        <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
+                                    </div><!-- End .ratings -->
+                                    <span class="ratings-text">( 2 Reviews )</span>
+                                </div><!-- End .rating-container -->
+                            </div><!-- End .product-body -->
+                        </div><!-- End .product -->
                     </div><!-- End .owl-carousel -->
                 </div><!-- End .container -->
             </div><!-- End .page-content -->
@@ -871,6 +1004,8 @@
     <script src="{% static 'assets/js/jquery.magnific-popup.min.js' %}"></script>
     <!-- Main JS File -->
     <script src="{% static 'assets/js/main.js' %}"></script>
+    <script>
+    </script>
 </body>
 
 
