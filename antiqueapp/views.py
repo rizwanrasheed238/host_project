@@ -13,7 +13,7 @@ from django.urls import reverse_lazy
 from antiqueapp.models import product
 from cart.models import OrderPlaced, Wishlist, Cart
 from .models import Account, Category, ReviewRating
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.db.models import Q
 from antiqueapp.models import Address,Review
 from .forms import ReviewForm
@@ -84,18 +84,6 @@ def deal_of_day(request):
     products = product.objects.filter(is_deal_of_day=True).first()
     return render(request, 'home.html', {'product': products})
 
-# @periodic_task(run_every=timedelta(days=1))
-# def update_deal_of_day():
-#     # Reset previous deal of the day
-#     product.objects.filter(is_deal_of_day=True).update(is_deal_of_day=False)
-#     # Select a random product to be the new deal of the day
-#     products_count = product.objects.count()
-#     random_index = randint(0, products_count - 1)
-#     random_product = product.objects.all()[random_index]
-#     random_product.is_deal_of_day = True
-#     random_product.save()
-
-
 
 @login_required
 def recommend_products(request):
@@ -128,7 +116,7 @@ def recommend_products(request):
     top_n = sorted(predictions, key=lambda x: x.est, reverse=True)[:5]
     recommended_products = [product.objects.get(id=pred.iid) for pred in top_n]
     print(recommended_products,"******************************************************8")
-    return render(request, 'productdet.html', {'products': recommended_products})
+    return render(request, 'productdet.html', {'produc': recommended_products})
 
 
 def blog(request):
@@ -137,36 +125,31 @@ def blog(request):
 def cart(request):
     return render(request,"cart.html")
 
+
 def login(request):
     if request.method == 'POST':
-        email=request.POST['email']
-        password=request.POST['password']
-        
+        email = request.POST['email']
+        password = request.POST['password']
 
-        user=authenticate(email=email, password=password)
+        user = authenticate(email=email, password=password)
         if user is not None:
             auth.login(request, user)
-            messages.success(request, 'you are logged in')
-            request.session['email']=email   
+            messages.success(request, 'You are logged in.')
+            request.session['email'] = email
 
             if user.is_admin:
                 return redirect('/admin/')
             
-            elif user.approved_staff:
-                return redirect('seller')
-
-            elif user.is_staff:
-                return redirect('seller')
+            elif user.approved_staff and user.is_staff:
+                return redirect('/seller/')
 
             else:
-                # messages.success(request, 'invalid email')
-                # return redirect('register')
                 return redirect('home')
 
-
         else:
-            messages.error(request, 'invalid login credentials')
-            return redirect('register')
+            messages.error(request, 'Invalid login credentials.')
+            return redirect('login')
+
     return render(request, 'login.html')
 
 def register(request):
@@ -523,12 +506,13 @@ def rateproduct(request,id):
     pproduct = order.product
     rreview=Review.objects.filter(product_id=id)
     item = OrderPlaced.objects.filter(id=id)
-    print(item,'33333333333333333333333333333333')
+    print(rreview,'33333333333333333333333333333333')
+
     if request.method == 'POST':
         review = request.POST['review']
         review_data = Review.objects.create(
             user=request.user,
-            product=product,
+            product=pproduct,
             review=review,
         )
         return redirect(reverse_lazy('home'))

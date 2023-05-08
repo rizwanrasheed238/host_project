@@ -6,7 +6,7 @@ from textblob import TextBlob
 
 
 class MyAccountManager(BaseUserManager):
-    def create_user(self, fname, lname, email, phone_number, is_staff, is_user, password=None):
+    def create_user(self, fname, lname, email, phone_number,password=None):
         if not email:
             raise ValueError('User must have an email address')
 
@@ -18,8 +18,8 @@ class MyAccountManager(BaseUserManager):
             lname=lname,
             fname=fname,
             phone_number=phone_number,
-            is_user=is_user,
-            is_staff=is_staff,
+            # is_user=is_user,
+            # is_staff=is_staff,
 
         )
 

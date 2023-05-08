@@ -68,7 +68,7 @@ class MyModelAdmin(admin.ModelAdmin):
         return custom_urls + urls
 
 class productAdmin(admin.ModelAdmin):
-    list_display = ('name','price','availabe','createf','stock','updated')
+    list_display = ('user','name','price','availabe','createf','stock','updated')
     list_editable = ('price',)
     prepopulated_fields ={'slug':('name',)}
     list_per_page = 20
