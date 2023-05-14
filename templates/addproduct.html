@@ -53,7 +53,7 @@
                 <a class="dropdown-item"><i class="dropdown-item-icon icon-speech text-primary"></i> Messages</a>
                 <a class="dropdown-item"><i class="dropdown-item-icon icon-energy text-primary"></i> Activity</a>
                 <a class="dropdown-item"><i class="dropdown-item-icon icon-question text-primary"></i> FAQ</a>
-                <a class="dropdown-item" href="{% url 'logout' %}><i class="dropdown-item-icon icon-power text-primary"></i>Sign Out</a>
+                <a class="dropdown-item" href="{% url 'logout' %}"><i class="dropdown-item-icon icon-power text-primary"></i>Sign Out</a>
               </div>
             </li>
           </ul>
@@ -151,52 +151,7 @@
               <div class="col-md-6 grid-margin stretch-card">
 
               </div>
-              <div class="col-md-6 grid-margin stretch-card">
-<!--                <div class="card">-->
-<!--                  <div class="card-body">-->
-<!--                    <h4 class="card-title">Horizontal Form</h4>-->
-<!--                    <p class="card-description"> Horizontal form layout </p>-->
-<!--                    <form class="forms-sample">-->
-<!--                      <div class="form-group row">-->
-<!--                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Email</label>-->
-<!--                        <div class="col-sm-9">-->
-<!--                          <input type="text" class="form-control" id="exampleInputUsername2" placeholder="Username">-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                      <div class="form-group row">-->
-<!--                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Email</label>-->
-<!--                        <div class="col-sm-9">-->
-<!--                          <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Email">-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                      <div class="form-group row">-->
-<!--                        <label for="exampleInputMobile" class="col-sm-3 col-form-label">Mobile</label>-->
-<!--                        <div class="col-sm-9">-->
-<!--                          <input type="text" class="form-control" id="exampleInputMobile" placeholder="Mobile number">-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                      <div class="form-group row">-->
-<!--                        <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Password</label>-->
-<!--                        <div class="col-sm-9">-->
-<!--                          <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                      <div class="form-group row">-->
-<!--                        <label for="exampleInputConfirmPassword2" class="col-sm-3 col-form-label">Re Password</label>-->
-<!--                        <div class="col-sm-9">-->
-<!--                          <input type="password" class="form-control" id="exampleInputConfirmPassword2" placeholder="Password">-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                      <div class="form-check form-check-flat form-check-primary">-->
-<!--                        <label class="form-check-label">-->
-<!--                          <input type="checkbox" class="form-check-input"> Remember me </label>-->
-<!--                      </div>-->
-<!--                      <button type="submit" class="btn btn-primary mr-2">Submit</button>-->
-<!--                      <button class="btn btn-light">Cancel</button>-->
-<!--                    </form>-->
-<!--                  </div>-->
-<!--                </div>-->
-              </div>
+              
               <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
@@ -209,7 +164,7 @@
                         <input type="text" class="form-control" name="pname" id="exampleInputName1">
                       </div>
                       <div class="form-group">
-                        <label for="exampleInputEmail3">Decription</label>
+                        <label for="exampleInputEmail3">Description</label>
                         <input type="text" class="form-control" name="pdesc" id="exampleInputEmail3">
                       </div>
                       <div class="form-group">
@@ -218,9 +173,9 @@
                       </div>
                       <div class="form-group">
                         <label for="exampleSelectGender">Category</label>
-                        <select class="form-control" name="cate" id="exampleSelectGender">
+
+                      <select class="form-control" name="cate" id="exampleSelectGender">
                               {% for c in categories %}
-<!--                          <option>Cat1</option>-->
                               <option value="{{c.id}}">{{c.name}}</option>
                               {% endfor %}
                         </select>
@@ -228,20 +183,19 @@
 
                        <div class="form-group">
                         <label for="exampleInputPassword4">Stock</label>
-                        <input type="text" name="stock" class="form-control">
+                        <input type="text" name="stock" id="stock" class="form-control">
                       </div>
                       <div class="form-group">
                         <div class="mb-3 col-md-6">
                                                 <label class="form-label">Add product image</label>
                                                 <!-- <label class="form-label">Site Logo</label> -->
                                                   <input class="form-control" name="pimg" type="file" id="formFile1" required>
-                                                <!-- <small class="text-muted">The image must have a maximum size of 1MB</small> -->
                                             </div>
                       </div>
 
 
-                      <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                      <button class="btn btn-light">Cancel</button>
+                      <button type="submit" id="submi" class="btn btn-primary mr-2">Submit</button>
+                      {% comment %} <button class="btn btn-light">Cancel</button> {% endcomment %}
                     </form>
                   </div>
                 </div>

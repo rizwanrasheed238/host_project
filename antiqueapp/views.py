@@ -234,16 +234,17 @@ def index(request):
 
 
 def search(request):
-    if request.method == 'GET':
-        query = request.GET.get('query')
+    if request.method == 'POST':
+        query = request.POST.get('query')
         if query:
             multiple_q = Q(Q(name__icontains=query) | Q(descripton__icontains=query))
             products = product.objects.filter(multiple_q)
-            return render(request, 'search.html', {'product':products})
+            return render(request, 'search.html', {'product': products})
         else:
             messages.info(request, 'No search result!!!')
             print("No information to show")
     return render(request, 'search.html', {})
+
 
 
 def search_products(request):
@@ -290,7 +291,7 @@ def forgotPassword(request):
             send_mail(
                 'Please activate your account',
                 message,
-                'medievalstore123@gmail.com',
+                'athulrizwan12345@gmail.com',
                 [email],
                 fail_silently=False,
             )

@@ -135,7 +135,7 @@
 
 	                		<div class="col-md-8 col-lg-9">
 	                			<div class="tab-content">
-								    <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
+								    <div class="tab-pane fade" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
 								    	<p>Hello <span class="font-weight-normal text-dark">User</span> (not <span class="font-weight-normal text-dark">User</span>? <a href="{% url 'logout' %}">Log out</a>)
 								    	<br>
 								    	From your account dashboard you can view your <a href="#tab-orders" class="tab-trigger-link link-underline">recent orders</a>, manage your <a href="#tab-address" class="tab-trigger-link">shipping and billing addresses</a>, and <a href="#tab-account" class="tab-trigger-link">edit your password and account details</a>.</p>
@@ -204,7 +204,7 @@
 								    	<div class="row">
 								    		<div class="col-lg-6">
 								    			<div class="card card-dashboard">
-								    				<div class="card-body">
+								    				{% comment %} <div class="card-body">
 								    					<h3 class="card-title">Billing Address</h3><!-- End .card-title -->
                                                         {% for i in adrs %}
 														<p>{{i.fname}}{{i.lname}}<br>
@@ -215,12 +215,12 @@
 														{{i.user.email}}<br>
                                                          {% endfor %}
 														<a href="{% url 'dashboard' %}">Edit <i class="icon-edit"></i></a></p>
-								    				</div><!-- End .card-body -->
+								    				</div><!-- End .card-body --> {% endcomment %}
 								    			</div><!-- End .card-dashboard -->
 								    		</div><!-- End .col-lg-6 -->
 								    	</div><!-- End .row -->
 								    </div><!-- .End .tab-pane -->
-                                    <div class="tab-pane fade" id="tab-address" role="tabpanel" aria-labelledby="tab-address-link">
+                                    <div class="tab-pane fade  show active" id="tab-address" role="tabpanel" aria-labelledby="tab-address-link">
 								    	<form method="POST" action="{% url 'address' %}">
                                             {% csrf_token %}
                                              <a class="btn btn-outline-primary-2" id="tab-address-sub" data-toggle="tab" href="#tab-address-submit" role="tab" aria-controls="tab-address" aria-selected="false">View Address</a>
@@ -228,12 +228,12 @@
 			                				<div class="row">
 			                					<div class="col-sm-6">
 			                						<label>First Name *</label>
-			                						<input type="text" class="form-control" required name="fname">
+			                						<input type="text" class="form-control" id="fname" required name="fname">
 			                					</div><!-- End .col-sm-6 -->
 
 			                					<div class="col-sm-6">
 			                						<label>Last Name *</label>
-			                						<input type="text" class="form-control" required name="lname">
+			                						<input type="text" class="form-control" id="lname" required name="lname">
 			                					</div><!-- End .col-sm-6 -->
 			                				</div><!-- End .row -->
 
@@ -242,31 +242,29 @@
                                             <div class="row">
 			                					<div class="col-sm-6">
 			                						<label>Street Address</label>
+			                						<input type="text" class="form-control" id="street" required name="street">
+
 													
 												</div><!-- End .col-sm-6 -->
 
 			                					<div class="col-sm-6">
 			                						<label>City</label>
-			                						<input type="text" class="form-control" required name="city">
+			                						<input type="text" class="form-control" id="city" required name="city">
 			                					</div><!-- End .col-sm-6 -->
 			                				</div><!-- End .row -->
 
-
-										
-
-
 		                					<label>State</label>
-		        							<input type="text" class="form-control" required name="state">
+		        							<input type="text" class="form-control" id="state" required name="state">
 
 		            						<label>Postcode / ZIP</label>
-		            						<input type="text" class="form-control" required name="zip">
+		            						<input type="text" class="form-control" id="zip" required name="zip">
 
 
                                             <label>Phone Number</label>
-		            						<input type="tel" class="form-control" required name="phone_number">
+		            						<input type="tel" class="form-control" id="phone" required name="phone_number">
 
 
-		                					<button type="submit" class="btn btn-outline-primary-2">
+		                					<button type="submit" id="submitt" class="btn btn-outline-primary-2">
 			                					<span>Submit</span>
 			            						<i class="icon-long-arrow-right"></i>
 			                				</button>

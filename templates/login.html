@@ -383,7 +383,7 @@
 							    </li>
 							</ul>
 							<div class="tab-content">
-							    <div class="tab-pane fade" id="signin-2" role="tabpanel" aria-labelledby="signin-tab-2">
+							    <div class="tab-pane fade show active" id="signin-2" role="tabpanel" aria-labelledby="signin-tab-2">
 							    	<form action="{% url 'login' %}" method="post">
                                         {% csrf_token %}
 							    		<div class="form-group">
@@ -397,7 +397,7 @@
 							    		</div><!-- End .form-group -->
 
 							    		<div class="form-footer">
-							    			<button type="submit" class="btn btn-outline-primary-2">
+							    			<button type="submit" Id="submitt" class="btn btn-outline-primary-2">
 			                					<span>LOG IN</span>
 			            						<i class="icon-long-arrow-right"></i>
 			                				</button>
@@ -407,7 +407,7 @@
 <!--												<label class="custom-control-label" for="signin-remember-2">Remember Me</label>-->
 <!--											</div>&lt;!&ndash; End .custom-checkbox &ndash;&gt;-->
 
-											<a href="{% url 'forgotPassword' %}" class="forgot-link">Forgot Your Password?</a>
+											<a href="{% url 'forgotPassword' %}" id="forgotpass" class="forgot-link">Forgot Your Password?</a>
 							    		</div><!-- End .form-footer -->
 							    	</form>
 <!--							    	<div class="form-choice">-->
@@ -428,7 +428,7 @@
 <!--								    	</div>&lt;!&ndash; End .row &ndash;&gt;-->
 <!--							    	</div>&lt;!&ndash; End .form-choice &ndash;&gt;-->
 							    </div><!-- .End .tab-pane -->
-							    <div class="tab-pane fade show active" id="register-2" role="tabpanel" aria-labelledby="register-tab-2">
+							    <div class="tab-pane fade" id="register-2" role="tabpanel" aria-labelledby="register-tab-2">
 							    	<form  method="post" onsubmit="return validation()" action="{% url 'register' %}">
 
 							    		{% csrf_token %}

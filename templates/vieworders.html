@@ -321,10 +321,7 @@
                         <thead>
                           <tr>
                             <th class="font-weight-bold">Name</th>
-                            <th class="font-weight-bold">Address</th>
-                            <th class="font-weight-bold">Phone</th>
-                            <th class="font-weight-bold">State</th>
-                            <th class="font-weight-bold">Pincode</th>
+                        
                             <th class="font-weight-bold">Product Name</th>
                             <th class="font-weight-bold">Image</th>
                             <th class="font-weight-bold">Quantity</th>
@@ -335,36 +332,32 @@
                           </tr>
                         </thead>
 
+                        
                         <tbody>
-                          {% for p in products %}
+                          {% for order in order_details %}
                           <tr>
-                            <!--                              <select class="form-control" name="cate" id="cate" onchange="myfunction()">-->
-                            <!--                              {% for c in category %}-->
-                            <!--&lt;!&ndash;                          <option>Cat1</option>&ndash;&gt;-->
-                            <!--                              <option value="{{c.category}}">{{c.name}}</option>-->
-                            <!--                              {% endfor %}-->
-                            <!--                              </select>-->
-                            <td>
-                              <img
-                                src="{{p.image.url}}"
-                                class="img-fluid"
-                                style="height:200px width:200px"
-                              />
-                            </td>
-                            <td>{{p.name}}</td>
-                            <td>{{p.descripton}}</td>
-                            <td>{{p.price}}</td>
-                            <td>{{p.stock}}</td>
-                            {% if p.stock %}
-                            <td>
-                              <a href="#" class="btn-success">In Stock</a>
-                            </td>
-                            {% else %}
-                            <td><a href="#">Out of Stock</a></td>
+                            {% comment %} {% for addr in addrs %}
+                            {% if order.address == addr %}
+                            <td>{{ addr.fname }}</td>
+                            <td>{{ addr.street }}</td>
+                            <td>{{ addr.phone }}</td>
+                            <td>{{ addr.state }}</td>
+                            <td>{{ addr.zip }}</td>
                             {% endif %}
+                            {% endfor %} {% endcomment %}
+                            <td>{{ order.user.lname }}</td>     
+                            <td>{{ order.product.name }}</td>                            
+                            <td><img src="{{ order.product.image.url }}" height="40" width="40"></td>
+                            <td>{{ order.quantity }}</td>
+                            <td>{{ order.product.price }}</td>
+                            <td>{{ order.ordered_date }}</td>
+
+                            {% comment %} <td>{% if order.stock %}In Stock{% else %}Out of Stock{% endif %}</td> {% endcomment %}
                           </tr>
                           {% endfor %}
                         </tbody>
+                        
+                        
                       </table>
                     </div>
                     <div class="d-flex mt-4 flex-wrap">

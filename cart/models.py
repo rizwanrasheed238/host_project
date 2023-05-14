@@ -1,6 +1,6 @@
 from django.db import models
 from antiqueapp.models import Account
-from antiqueapp.models import product
+from antiqueapp.models import product,Address
 
 
 
@@ -67,6 +67,8 @@ class OrderPlaced(models.Model):
     is_ordered = models.BooleanField(default=False)
     ordered_date = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True, blank=True)
+
 
     def __str__(self):
         return self.product.name

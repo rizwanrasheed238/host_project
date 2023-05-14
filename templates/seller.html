@@ -176,7 +176,7 @@
               <span class="nav-link">Manage</span>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{%url 'addproduct' %}">
+              <a class="nav-link" id="addproduct" href="{%url 'addproduct' %}">
                 <span class="menu-title">Add Products</span>
                 <i class="icon-globe menu-icon"></i>
               </a>
@@ -338,13 +338,7 @@
                             <!--                              <option value="{{c.category}}">{{c.name}}</option>-->
                             <!--                              {% endfor %}-->
                             <!--                              </select>-->
-                            <td>
-                              <img
-                                src="{{p.image.url}}"
-                                class="img-fluid"
-                                style="height:200px width:200px"
-                              />
-                            </td>
+                            <td><img src="{{ p.image.url }}" height="40" width="40"></td>
                             <td>{{p.name}}</td>
                             <td>{{p.descripton}}</td>
                             <td>{{p.price}}</td>
