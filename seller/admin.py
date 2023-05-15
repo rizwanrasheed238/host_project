@@ -6,4 +6,4 @@ class SellerProductAdmin(admin.ModelAdmin):
     list_filter = ['name', 'category']
     search_fields = ['user__username', 'product__name']
 
-admin.site.register(seller_product, SellerProductAdmin)
+# admin.site.register(seller_product, SellerProductAdmin)

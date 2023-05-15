@@ -29,6 +29,8 @@ urlpatterns = [
     path('',include('antiqueapp.urls')),
     path('',include('cart.urls')),
     path('', include('seller.urls')),
+    path('', include("chatapp.urls")),
+
 
 ]
 if settings.DEBUG:

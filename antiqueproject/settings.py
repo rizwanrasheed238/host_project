@@ -28,15 +28,28 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+CHANNEL_LAYERS = {
+	"default": {
+		"BACKEND": "channels_redis.core.RedisChannelLayer"
+	}
+}
+
+
+LOGIN_REDIRECT_URL="chat-page"
+
+LOGOUT_REDIRECT_URL="login-user"
+
 # Application definition
 
 INSTALLED_APPS = [
     # 'admin_interface',
     # 'colorfield',
+    # 'chatapp.apps.ChatappConfig',
     'antiqueapp',
     'jazzmin',
     'cart',
     'seller',
+    'chatapp',
     'channels',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -45,6 +58,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+ASGI_APPLICATION = 'antiqueproject.asgi.application'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -171,7 +186,8 @@ JAZZMIN_SETTINGS = {
         {"name": "View Website", "url": "http://127.0.0.1:8000/", "new_window": True},
         # {"name": "Sales Chart", "url": "http://127.0.0.1:8000/view/", "new_window": True},
         {"name":"Sentiment Graph", "url":"http://127.0.0.1:8000/admin/antiqueapp/product/sentiment-graph/","new_window":True},
-        # {"name":"Product Sales", "url":"http://127.0.0.1:8000/admin/antiqueapp/product/top-products/","new_window":True},
+        {"name":"Product Sales", "url":"http://127.0.0.1:8000/admin/antiqueapp/product/admin-top-products/","new_window":True},
+        # {"name":"Chat", "url":"http://127.0.0.1:8000/auth/login/","new_window":True},
 
 
     ],
