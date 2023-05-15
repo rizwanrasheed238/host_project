@@ -9,7 +9,6 @@ from antiqueapp.models import Category, product, Address
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import View
-from .utils import render_to_pdf
 
 
 import json
@@ -169,32 +168,5 @@ def payment_done(request):
 
     return redirect('home')
 
-#pdf generate
-def get(request, id, *args, **kwargs, ):
-        user=request.user
-        place = OrderPlaced.objects.all()
-        # date = place.payment.created  _at
-        orders = OrderPlaced.objects.filter(user_id=user,id=id)
-        total = 0
-        for o in orders:
-            total = total + (o.product.price * o.quantity)
-        addrs=Address.objects.filter(user_id= request.user.id)
-        print(total,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-        
-        data = {
-            "total": total,
-            "orders": orders,
-            "shipping": addrs,
-            "user":user,
-        }
-        pdf = render_to_pdf('report.html', data)
-        if pdf:
-            response = HttpResponse(pdf, content_type='application/pdf')
-            # filename = "Report_for_%s.pdf" %(data['id'])
-            filename = "Bill"
 
-            content = "inline; filename= %s" % (filename)
-            response['Content-Disposition'] = content
-            return response
-        return HttpResponse("Page Not Found")
 
