@@ -34,13 +34,10 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
 from django.core.mail import send_mail
 from django.http import JsonResponse
-from textblob import TextBlob
 
 from django.db.models import Avg,Sum
 from antiqueapp.models import product, Rating
-from surprise import SVD
-from surprise import Dataset
-from surprise import Reader
+
 
 from datetime import timedelta
 from django.utils import timezone
@@ -59,8 +56,8 @@ def home(request):
     wlist = Wishlist.objects.filter(user_id=user.id)
     cart = Cart.objects.filter(user_id=user.id)
 
-    sentiment_score = request.GET.get('sentiment_score', None)
-    return render(request, 'home.html', {'datas': products, 'category': category,'sentiment_score': sentiment_score,'wlist':wlist,'cart':cart})
+    # sentiment_score = request.GET.get('sentiment_score', None)
+    return render(request, 'home.html', {'datas': products, 'category': category,'wlist':wlist,'cart':cart})
 
 def products(request,id):
     user=request.user
@@ -84,39 +81,6 @@ def deal_of_day(request):
     products = product.objects.filter(is_deal_of_day=True).first()
     return render(request, 'home.html', {'product': products})
 
-
-@login_required
-def recommend_products(request):
-    # Get all the products in the database
-    products = product.objects.all()
-
-    # Create a dictionary of the ratings for each product
-    product_ratings = {}
-    for product in products:
-        ratings = Rating.objects.filter(product=product)
-        if ratings:
-            product_ratings[product.id] = round(ratings.aggregate(Avg('value'))['value__avg'], 2)
-
-    # Load the data into the Surprise library
-    reader = Reader(rating_scale=(1, 5))
-    data = Dataset.load_from_dict(product_ratings, reader)
-    trainset = data.build_full_trainset()
-
-    # Train the SVD algorithm on the data
-    algo = SVD()
-    algo.fit(trainset)
-
-    # Get the top 5 recommended products for the current user
-    current_user = request.user
-    user_ratings = Rating.objects.filter(user=current_user)
-    user_product_ids = [rating.product.id for rating in user_ratings]
-    testset = trainset.build_anti_testset()
-    testset = filter(lambda x: x[0] == current_user.id, testset)
-    predictions = algo.test(testset)
-    top_n = sorted(predictions, key=lambda x: x.est, reverse=True)[:5]
-    recommended_products = [product.objects.get(id=pred.iid) for pred in top_n]
-    print(recommended_products,"******************************************************8")
-    return render(request, 'productdet.html', {'produc': recommended_products})
 
 
 def blog(request):
@@ -429,47 +393,13 @@ def add_address(request):
 
 
 #for data visualisatiom im admin panel
-import matplotlib.pyplot as plt
+
 from django.db.models.functions import ExtractMonth
 from django.db.models import Count
 from cart.models import OrderPlaced
 from django.views.decorators.csrf import csrf_exempt
-import matplotlib
-matplotlib.use('Agg')
 
 
-@csrf_exempt
-def view(request):
-    data = OrderPlaced.objects.filter(is_ordered=True).annotate(month=ExtractMonth('ordered_date')).values(
-        'month').order_by('month')
-
-    months = [month[1] for month in OrderPlaced.MONTH_CHOICES]
-
-    totals = [data.filter(month=month[0]).aggregate(total=Count('id'))['total'] for month in OrderPlaced.MONTH_CHOICES]
-
-    plt.bar(months, totals)
-    plt.title('Products sold by month')
-    plt.xlabel('Month')
-    plt.ylabel('Total')
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-
-    # Convert the plot to a Django view response
-    from io import BytesIO
-    import base64
-    buffer = BytesIO()
-    plt.savefig(buffer, format='png')
-    buffer.seek(0)
-    image_png = buffer.getvalue()
-    buffer.close()
-    graphic = base64.b64encode(image_png)
-    graphic = graphic.decode('utf-8')
-
-    # Render the template with the plot and URLs
-    context = {
-        'graphic': graphic,
-    }
-    return render(request, 'admin/products_sold_by_month.html', context)
 
 
 # @csrf_exempt
@@ -500,39 +430,3 @@ def view(request):
 #     }
 #     return render(request, 'admin/top_products.html', context)    
 
-
-def rateproduct(request,id):
-    user=request.user
-    order = get_object_or_404(OrderPlaced,id=id)
-    pproduct = order.product
-    rreview=Review.objects.filter(product_id=id)
-    item = OrderPlaced.objects.filter(id=id)
-    print(rreview,'33333333333333333333333333333333')
-
-    if request.method == 'POST':
-        review = request.POST['review']
-        review_data = Review.objects.create(
-            user=request.user,
-            product=pproduct,
-            review=review,
-        )
-        return redirect(reverse_lazy('home'))
-    else:
-        context = {'order': order, 'product': pproduct,'rev':rreview,'datas':item, 'productname': product.name}
-        return render(request, 'productdet.html', context)
-
-from twilio.rest import Client 
- 
-
-def sendsms(): 
-    account_sid = 'AC8cc6b7182a8c135645ac147cc64950cf' 
-    auth_token = '7525383d7f21fc89baa666916df0bd07' 
-    client = Client(account_sid, auth_token) 
-    
-    message = client.messages.create(  
-                                messaging_service_sid='MG3b54cd6c00080cecb79e4dc404e84fc6', 
-                                body='Thank you for ordering with us.Your order has been successfull',      
-                                to='+918330864643' 
-                            ) 
-    
-    print('message sent succesfully')  

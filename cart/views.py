@@ -10,7 +10,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import View
 from .utils import render_to_pdf
-from antiqueapp.views import sendsms
+
 
 import json
 from decimal import Decimal

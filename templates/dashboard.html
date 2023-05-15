@@ -158,7 +158,7 @@
                                                 <th class="font-weight-bold">Product Name</th>
                                                 <th class="font-weight-bold">Price</th>
                                                 <th class="font-weight-bold">Review</th>
-                                                <th class="font-weight-bold">bill</th>
+                                                {% comment %} <th class="font-weight-bold">bill</th> {% endcomment %}
 
 
                                               </tr>
@@ -175,7 +175,7 @@
                                                 <td><img src="{{i.product.image.url}}" class="img-fluid" style="height:50px"></td>
                                                 <td>{{i.product.name}}</td>
                                                 <td>{{i.product.price}}</td>
-                                                <td><a href="{% url 'review' i.id %}">Rate us</a></td>
+                                                {% comment %} <td><a href="{% url 'review' i.id %}">Rate us</a></td> {% endcomment %}
 												<td>
 												
       

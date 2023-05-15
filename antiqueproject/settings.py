@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'cart',
     'seller',
     'chatapp',
-    'channels',
+    # 'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -183,10 +183,10 @@ JAZZMIN_SETTINGS = {
 
 
         # external url that opens in a new window (Permissions can be added)
-        {"name": "View Website", "url": "http://127.0.0.1:8000/", "new_window": True},
+        # {"name": "View Website", "url": "http://127.0.0.1:8000/", "new_window": True},
         # {"name": "Sales Chart", "url": "http://127.0.0.1:8000/view/", "new_window": True},
-        {"name":"Sentiment Graph", "url":"http://127.0.0.1:8000/admin/antiqueapp/product/sentiment-graph/","new_window":True},
-        {"name":"Product Sales", "url":"http://127.0.0.1:8000/admin/antiqueapp/product/admin-top-products/","new_window":True},
+        # {"name":"Sentiment Graph", "url":"http://127.0.0.1:8000/admin/antiqueapp/product/sentiment-graph/","new_window":True},
+        # {"name":"Product Sales", "url":"http://127.0.0.1:8000/admin/antiqueapp/product/admin-top-products/","new_window":True},
         # {"name":"Chat", "url":"http://127.0.0.1:8000/auth/login/","new_window":True},
 
 

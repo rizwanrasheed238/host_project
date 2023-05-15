@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.urls import reverse
 from django.db.models import Avg, Count
-from textblob import TextBlob
 
 
 class MyAccountManager(BaseUserManager):
@@ -173,12 +172,3 @@ class Review(models.Model):
     def __str__(self):
         return self.product
 
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.sentiment_polarity = self.get_sentiment()
-        super().save(*args, **kwargs)
-
-    def get_sentiment(self):
-        blob = TextBlob(self.review)
-        sentiment_polarity = blob.sentiment.polarity
-        return sentiment_polarity
